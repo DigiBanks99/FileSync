@@ -28,6 +28,11 @@ namespace FileSync
             if (string.IsNullOrEmpty(watchDir))
               continue;
             string[] dirs = SeperateStrings(watchDir);
+            if (dirs[0] == null || dirs[1] == null)
+            {
+              Console.WriteLine(string.Format("ERROR: Watchdir is not valid. Please correct them according to the previous errors and try again."));
+              break;
+            }
             CreateFiles(dirs[0], dirs[1]);
           }
         }
@@ -118,8 +123,14 @@ namespace FileSync
         return null;
 
       var pathPair = new string[2];
-      pathPair[0] = watch.Substring(0, watch.IndexOf(Splitter, StringComparison.Ordinal));
-      pathPair[1] = watch.Substring(watch.IndexOf(Splitter, StringComparison.Ordinal) + Splitter.Length);
+      var indexOfSplitter = watch.IndexOf(Splitter, StringComparison.Ordinal);
+      if (indexOfSplitter < 1)
+      {
+        Console.WriteLine(string.Format("ERROR: The path line '{0}', does not have the correct splitter ('{1}').", watch, Splitter));
+        return pathPair;
+      }
+      pathPair[0] = watch.Substring(0, indexOfSplitter);
+      pathPair[1] = watch.Substring(indexOfSplitter + Splitter.Length);
       return pathPair;
     }
 
