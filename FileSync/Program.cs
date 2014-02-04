@@ -187,7 +187,7 @@ namespace FileSync
 
     public static int CheckForNewFiles(IFile fileRemote, List<IFile> localList)
     {
-      return localList.Any(fileLocal => fileRemote.Compare(fileLocal) == FileConsts.ERROR) ? FileConsts.ERROR : FileConsts.NOACTION;
+      return localList.Any(fileLocal => fileRemote.Compare(fileLocal) == FileConsts.ERROR) || (localList.Count == 0 && fileRemote != null) ? FileConsts.ERROR : FileConsts.NOACTION;
     }
   }
 }
