@@ -56,11 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\FileConsts.cs" />
-    <Compile Include="Base\ManagedFile.cs" />
-    <Compile Include="Base\IFile.cs" />
+    <Compile Include="BaseItem.cs" />
+    <Compile Include="BaseList.cs" />
+    <Compile Include="WatchItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WatchLocation.cs" />
+    <Compile Include="WatchItemList.cs" />
+    <Compile Include="WatchLocationList.cs" />
+    <Compile Include="XMLManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
