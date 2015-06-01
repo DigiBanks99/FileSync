@@ -10,7 +10,7 @@ namespace FileSync
   {
     public static bool IsStringNullOrEmpty(string value)
     {
-      if (value == null || value = string.Empty)
+      if (value == null || value == string.Empty)
         return true;
       return false;
     }
