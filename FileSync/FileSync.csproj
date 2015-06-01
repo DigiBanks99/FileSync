@@ -60,16 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSyncManager.cs" />
-    <Compile Include="WatchItem.cs" />
     <Compile Include="Logger.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WatchLocation.cs" />
-    <Compile Include="WatchItemList.cs" />
-    <Compile Include="WatchLocationList.cs" />
-    <Compile Include="XMLManager.cs" />
     <Compile Include="WatchItem.cs" />
     <Compile Include="WatchList.cs" />
   </ItemGroup>

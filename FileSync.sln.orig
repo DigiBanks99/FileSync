@@ -1,0 +1,49 @@
+<<<<<<< HEAD
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSync", "FileSync\FileSync.csproj", "{21EC1640-FE01-4010-8018-3FFC5251CC6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDXmlLib", "DDXmlReader\DDXmlLib.csproj", "{2884765E-A441-4F67-917C-7FDD1FBCF042}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2884765E-A441-4F67-917C-7FDD1FBCF042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2884765E-A441-4F67-917C-7FDD1FBCF042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2884765E-A441-4F67-917C-7FDD1FBCF042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2884765E-A441-4F67-917C-7FDD1FBCF042}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+=======
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSync", "FileSync\FileSync.csproj", "{21EC1640-FE01-4010-8018-3FFC5251CC6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21EC1640-FE01-4010-8018-3FFC5251CC6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+>>>>>>> 520300d9827f3b6b839a4567026727f1e0c68051

@@ -57,23 +57,6 @@ namespace DDXmlLib
     {
       var document = new XmlDocument();
       var elements = new List<XmlNode>();
-
-      //using (XmlReader xmlReader = XmlReader.Create(filePath))
-      //{
-      //  xmlReader.MoveToContent();
-
-      //  while (xmlReader.Read())
-      //  {
-      //    if (xmlReader.Name == elementName && xmlReader.NodeType == XmlNodeType.Element)
-      //    {
-      //      var node = document.CreateNode(XmlNodeType.Element, xmlReader.Name, string.Empty);
-      //      node.InnerXml = xmlReader.ReadInnerXml();
-      //      node.InnerText = node.InnerText.Trim();
-      //      elements.Add(node);
-      //    }
-      //  }
-      //}
-
       document.Load(filePath);
       var childNodes = document.ChildNodes;
       GetMatchingNode(elementName, elements, childNodes);
