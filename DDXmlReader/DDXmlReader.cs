@@ -64,6 +64,13 @@ namespace DDXmlLib
       return elements;
     }
 
+    public static XmlDocument ReadDocument(string filePath)
+    {
+      var document = new XmlDocument();
+      document.Load(filePath);
+      return document;
+    }
+
     private static void GetMatchingNode(string elementName, List<XmlNode> elements, XmlNodeList childNodes)
     {
       foreach (XmlNode node in childNodes)

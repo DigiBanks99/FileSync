@@ -9,16 +9,41 @@ namespace DDXmlLib
 {
   public class DDXmlWriter
   {
-    public static XmlNode CreateXmlNode(object item, List<string> excludeProperties = null)
+    public static XmlNode CreateXmlNode(object item, XmlDocument document = null, List<string> excludeProperties = null, string name = "")
     {
       if (item == null)
         return null;
 
-      XmlDocument document = new XmlDocument();
+      if (document == null)
+        document = new XmlDocument();
 
       var type = item.GetType();
 
-      var node = document.CreateElement(type.Name);
+      if (name == string.Empty)
+        name = type.Name;
+
+      XmlNode node = document.CreateElement(name);
+
+      if (typeof(System.Collections.Generic.IEnumerable<string>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<char>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<short>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<int>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<long>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<float>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<double>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<decimal>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<DateTime>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<bool>).IsAssignableFrom(type) ||
+          typeof(System.Collections.Generic.IEnumerable<Guid>).IsAssignableFrom(type)) // TODO: test if nullables work.
+      {
+        string stringValue = string.Empty;
+        foreach (var val in (System.Collections.IEnumerable)item)
+        {
+          stringValue += val.ToString() + Environment.NewLine;
+        }
+        node.InnerText = stringValue;
+        return node;
+      }
 
       foreach (var property in type.GetProperties())
       {
@@ -33,9 +58,11 @@ namespace DDXmlLib
         var propertyNode = document.CreateNode(XmlNodeType.Element, property.Name, string.Empty);
 
         // Check if property is a generic collection of some sort and return it as an element
-        if (typeof(ICollection<>).IsAssignableFrom(property.GetType()))
+        if (typeof(System.Collections.ICollection).IsAssignableFrom(property.PropertyType))
         {
-          propertyNode.AppendChild(CreateXmlNode(property.GetValue(item)));
+          XmlNode newNode = CreateXmlNode(property.GetValue(item), document, name: property.Name);
+          if (newNode != null)
+            propertyNode.AppendChild(newNode);
         }
         else // add the value as inner text
         {
@@ -146,6 +173,64 @@ namespace DDXmlLib
         }
 
         xmlWriter.WriteEndElement();
+      }
+    }
+
+    public static void UpdateElements(string filePath, string identifierName, IEnumerable<XmlNode> updateElements)
+    {
+      XmlDocument document = null;
+      try
+      {
+        document = DDXmlReader.ReadDocument(filePath);
+      }
+      catch (IOException ex)
+      {
+        throw ex;
+      }
+
+      if (document == null)
+        return; // TODO: handle a document that cannot be read
+
+      foreach (XmlElement updateElement in updateElements)
+      {
+        // Find the identifier element
+        XmlElement identifier = updateElement[identifierName];
+        if (identifier == null)
+          continue; // TODO: handle elements that don't have a valid identifier when updating the watch list
+
+        if (document.HasChildNodes)
+          UpdateChildElements(updateElement, identifier, document.ChildNodes, document);
+
+        document.Save(filePath);
+      }
+    }
+
+    public static void UpdateChildElements(XmlElement updateElement, XmlElement identifier, XmlNodeList childNodes, XmlDocument document)
+    {
+      foreach (XmlElement element in childNodes)
+      {
+        if (element.Name != updateElement.Name)
+        {
+          if (!element.HasChildNodes)
+            continue;
+
+          UpdateChildElements(updateElement, identifier, element.ChildNodes, document);
+          continue;
+        }
+
+        if (element[identifier.Name] == null)
+          continue;
+
+        foreach (XmlElement updateProperty in updateElement.ChildNodes)
+        {
+          if (element[updateProperty.Name] == null)
+          {
+            var node = document.CreateElement(updateProperty.Name);
+            element.AppendChild(node);
+          }
+
+          element[updateProperty.Name].InnerXml = updateProperty.InnerXml;
+        }
       }
     }
   }

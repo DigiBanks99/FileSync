@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DDXmlLib;
 using DDXmlLib.ExceptionHandling;
 
 namespace FileSync
@@ -18,7 +20,7 @@ namespace FileSync
         {
           if (args.Length < 4)
           {
-            Logger.Info("Usage for add is: add <name> <sourcePath> <destinationPath> [-e]");
+            Logger.Info("Usage for add is: add <name> <sourcePath> <destinationPath> [-e] [-skip=\"value1;value2;value3...]");
             return;
           }
 
@@ -26,10 +28,26 @@ namespace FileSync
           var source = args[2];
           var dest = args[3];
           var includeSubFolders = true;
+          List<string> skipList = null;
           if (args.Length > 4)
-            includeSubFolders = args[4] == "-e" ? false : true;
+          {
+            for (var i = 4; i < args.Length; i++)
+            {
+              if (args[i] == "-e")
+                includeSubFolders = false;
 
-          AddWatch(name, source, dest, includeSubFolders);
+              if (args[i].StartsWith("-skip="))
+              {
+                var skipString = args[i].Substring(args[i].IndexOf('=') + 1);
+                var skipArr = skipString.Split(';');
+                skipList = new List<string>();
+                foreach (string skipFolder in skipArr)
+                  skipList.Add(skipFolder);
+              }
+            }
+          }
+
+          AddWatch(name, source, dest, includeSubFolders, skipList);
         }
         else if (args[0].ToLower() == "rem" ||
                 args[0].ToLower() == "remove" ||
@@ -59,13 +77,13 @@ namespace FileSync
 
     private static void ShowHelp()
     {
-      Logger.Info("Usage: filesync [sync] [add add <name> <sourcePath> <destinationPath>] [del] [help]");
+      Logger.Info("Usage: filesync [sync] [add <name> <sourcePath> <destinationPath>] [del] [help]");
       Logger.Info(string.Empty);
       Logger.Info("The most commonly used FileSync commands are:");
       Logger.Info("\tsync\tSyncs files as defined in the watch file");
       Logger.Info("\thelp\tShows the help");
       Logger.Info("\tdel\tDeletes a watch according to name specified as the second parameter");
-      Logger.Info("\tadd\tAdds a new watch. Must be followed by [Name of watch] and [Source Path] and [Destination Path]. OPTIONAL: -e to copy only to the first level");
+      Logger.Info("\tadd\tAdds a new watch. Must be followed by [Name of watch] and [Source Path] and [Destination Path]. \n\t\tOPTIONAL:\t[-e] to copy only to the first level\n\t\t\t\t[-skip=\"value1;value2;value3...\"] to skip specific folders.");
     }
 
     private static void Sync()
@@ -96,14 +114,15 @@ namespace FileSync
       Logger.Info(string.Empty);
     }
 
-    private static void AddWatch(string name, string sourcePath, string destPath, bool includeSubFolders = true)
+    private static void AddWatch(string name, string sourcePath, string destPath, bool includeSubFolders = true, List<string> skipList = null)
     {
       var watchItem = new WatchItem();
       watchItem.Name = name;
       watchItem.SourcePath = sourcePath;
       watchItem.DestinationPath = destPath;
-      watchItem.LastSyncDate = DateTime.Now;
+      watchItem.LastSyncDate = null;
       watchItem.IncludeSubFolders = includeSubFolders;
+      watchItem.ExcludeFolders = skipList;
 
       _manager.AddNewWatch(watchItem);
       Logger.Info(string.Format("Added watch for {0}", watchItem.Name));
