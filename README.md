@@ -11,7 +11,7 @@ Commands
 
 The following commands can be used:
 
-Copy the files in the default watchlist
+  Copy the files in the default watchlist
 ```
     filesync sync
 ```
@@ -19,11 +19,15 @@ Copy the files in the default watchlist
 
   Add a new file to the watch list
 ```
-      filesync add <name> <sourcePath> <destinationPath> [-e] [-skip]
+    filesync add <name> <sourcePath> <destinationPath> [-e] [-skip]
 ```
 
   Delete a watch from the list
-      filesync del
+```
+    filesync del
+```
 
   See the help
-      filesync help
+```
+    filesync help
+```
