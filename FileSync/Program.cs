@@ -59,11 +59,13 @@ namespace FileSync
 
     private static void ShowHelp()
     {
-      Logger.Info("Synchronises files accross locations as specified in a watch file, located at %AppData%\\FileSync.\nThe following commands are available: ");
-      Logger.Info("\tsync\t-\tSyncs files as defined in the watch file");
-      Logger.Info("\thelp\t-\tShows the help");
-      Logger.Info("\tdel\t-\tDeletes a watch according to name specified as the second parameter");
-      Logger.Info("\tadd\t-\tAdds a new watch. Must be followed by [Name of watch] and [Source Path] and [Destination Path]. OPTIONAL: -e to copy only to the first level");
+      Logger.Info("Usage: filesync [sync] [add add <name> <sourcePath> <destinationPath>] [del] [help]");
+      Logger.Info(string.Empty);
+      Logger.Info("The most commonly used FileSync commands are:");
+      Logger.Info("\tsync\tSyncs files as defined in the watch file");
+      Logger.Info("\thelp\tShows the help");
+      Logger.Info("\tdel\tDeletes a watch according to name specified as the second parameter");
+      Logger.Info("\tadd\tAdds a new watch. Must be followed by [Name of watch] and [Source Path] and [Destination Path]. OPTIONAL: -e to copy only to the first level");
     }
 
     private static void Sync()
