@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml;
 
 namespace FileSync
 {
-  public class WatchItem
+  public class WatchItem : INotifyPropertyChanged
   {
     #region Properties
     private string _name;
@@ -14,6 +15,7 @@ namespace FileSync
       set
       {
         _name = value;
+        NotifyPropertyChanged("Name");
       }
     }
 
@@ -24,6 +26,7 @@ namespace FileSync
       set
       {
         _sourcePath = value;
+        NotifyPropertyChanged("SourcePath");
       }
     }
 
@@ -34,6 +37,7 @@ namespace FileSync
       set
       {
         _destPath = value;
+        NotifyPropertyChanged("DestinationPath");
       }
     }
 
@@ -44,6 +48,7 @@ namespace FileSync
       set
       {
         _includeSubFolders = value;
+        NotifyPropertyChanged("IncludeSubFolders");
       }
     }
 
@@ -54,16 +59,18 @@ namespace FileSync
       set
       {
         _excludeKeyWords = value;
+        NotifyPropertyChanged("ExcludeKeyWords");
       }
     }
 
-    private List<string> _excludeFolders;
-    public List<string> ExcludeFolders
+    private List<ExcludeFolder> _excludeFolders;
+    public List<ExcludeFolder> ExcludeFolders
     {
       get { return _excludeFolders; }
       set
       {
         _excludeFolders = value;
+        NotifyPropertyChanged("ExcludeFolders");
       }
     }
 
@@ -74,8 +81,19 @@ namespace FileSync
       set
       {
         _lastSyncDate = value;
+        NotifyPropertyChanged("LastSyncDate");
       }
     }
     #endregion Properties
+
+    #region Events and Delegates
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void NotifyPropertyChanged(string propertyName)
+    {
+      if (PropertyChanged != null)
+        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion Events and Delegates
   }
 }

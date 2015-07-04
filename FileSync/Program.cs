@@ -28,7 +28,7 @@ namespace FileSync
           var source = args[2];
           var dest = args[3];
           var includeSubFolders = true;
-          List<string> skipList = null;
+          List<ExcludeFolder> skipList = null;
           if (args.Length > 4)
           {
             for (var i = 4; i < args.Length; i++)
@@ -40,9 +40,9 @@ namespace FileSync
               {
                 var skipString = args[i].Substring(args[i].IndexOf('=') + 1);
                 var skipArr = skipString.Split(';');
-                skipList = new List<string>();
+                skipList = new List<ExcludeFolder>();
                 foreach (string skipFolder in skipArr)
-                  skipList.Add(skipFolder);
+                  skipList.Add(new ExcludeFolder() { ExcludeFolderName = skipFolder });
               }
             }
           }
@@ -114,7 +114,7 @@ namespace FileSync
       Logger.Info(string.Empty);
     }
 
-    private static void AddWatch(string name, string sourcePath, string destPath, bool includeSubFolders = true, List<string> skipList = null)
+    private static void AddWatch(string name, string sourcePath, string destPath, bool includeSubFolders = true, List<ExcludeFolder> skipList = null)
     {
       var watchItem = new WatchItem();
       watchItem.Name = name;

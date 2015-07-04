@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSyncEventArgs.cs" />
+    <Compile Include="ExcludeFolder.cs" />
+    <Compile Include="Extensions\ExcludeFolderExt.cs" />
     <Compile Include="FileSyncManager.cs" />
     <Compile Include="Logger.cs">
       <SubType>Code</SubType>

@@ -24,24 +24,14 @@ namespace DDXmlLib
 
       XmlNode node = document.CreateElement(name);
 
-      if (typeof(System.Collections.Generic.IEnumerable<string>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<char>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<short>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<int>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<long>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<float>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<double>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<decimal>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<DateTime>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<bool>).IsAssignableFrom(type) ||
-          typeof(System.Collections.Generic.IEnumerable<Guid>).IsAssignableFrom(type)) // TODO: test if nullables work.
+      if (typeof(System.Collections.IEnumerable).IsAssignableFrom(type)) // TODO: test if nullables work.
       {
-        string stringValue = string.Empty;
-        foreach (var val in (System.Collections.IEnumerable)item)
+        foreach (var collectionItem in (System.Collections.IEnumerable)item)
         {
-          stringValue += val.ToString() + Environment.NewLine;
+          var collectionChildNode = CreateXmlNode(collectionItem, document, excludeProperties, collectionItem.GetType().Name);
+          if (collectionChildNode != null && collectionChildNode.InnerXml != null && collectionChildNode.InnerXml != string.Empty)
+            node.AppendChild(collectionChildNode);
         }
-        node.InnerText = stringValue;
         return node;
       }
 
@@ -62,7 +52,7 @@ namespace DDXmlLib
         {
           XmlNode newNode = CreateXmlNode(property.GetValue(item), document, name: property.Name);
           if (newNode != null)
-            propertyNode.AppendChild(newNode);
+            propertyNode = newNode;
         }
         else // add the value as inner text
         {
@@ -70,7 +60,7 @@ namespace DDXmlLib
           if (value != null)
             propertyNode.InnerText = value.ToString();
           else
-            propertyNode.InnerText = null;
+            continue;
         }
 
         node.AppendChild(propertyNode);
