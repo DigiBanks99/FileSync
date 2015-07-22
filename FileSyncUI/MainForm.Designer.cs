@@ -17,28 +17,33 @@
     {
       this.components = new System.ComponentModel.Container();
       this.toolStripMain = new System.Windows.Forms.ToolStrip();
-      this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonSync = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
       this.statusStripMain = new System.Windows.Forms.StatusStrip();
       this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
       this.toolStripStatusLabelMain = new System.Windows.Forms.ToolStripStatusLabel();
       this.gridViewWatches = new System.Windows.Forms.DataGridView();
+      this.gridViewExcludeFolders = new System.Windows.Forms.DataGridView();
+      this.gridViewExcludeKeyWords = new System.Windows.Forms.DataGridView();
+      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.excludeKeyWordsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.watchListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.excludeFolderNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.sourcePathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.destinationPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.includeSubFoldersDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.lastSyncDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.watchListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.gridViewExcludeFolders = new System.Windows.Forms.DataGridView();
-      this.excludeFolderNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonSync = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
       this.toolStripMain.SuspendLayout();
       this.statusStripMain.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewWatches)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeFolders)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeKeyWords)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.excludeKeyWordsBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // toolStripMain
@@ -50,59 +55,11 @@
             this.toolStripButtonCancel,
             this.toolStripButtonExit});
       this.toolStripMain.Location = new System.Drawing.Point(0, 0);
+      this.toolStripMain.MinimumSize = new System.Drawing.Size(0, 54);
       this.toolStripMain.Name = "toolStripMain";
-      this.toolStripMain.Size = new System.Drawing.Size(983, 25);
+      this.toolStripMain.Size = new System.Drawing.Size(983, 54);
       this.toolStripMain.TabIndex = 0;
       this.toolStripMain.Text = "toolStripMain";
-      // 
-      // toolStripButtonNew
-      // 
-      this.toolStripButtonNew.Image = global::FileSyncUI.Properties.Resources.New;
-      this.toolStripButtonNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonNew.Name = "toolStripButtonNew";
-      this.toolStripButtonNew.Size = new System.Drawing.Size(88, 22);
-      this.toolStripButtonNew.Text = "New Watch";
-      this.toolStripButtonNew.ToolTipText = "Adds a new watch to the list";
-      this.toolStripButtonNew.Click += new System.EventHandler(this.toolStripButtonNew_Click);
-      // 
-      // toolStripButtonSave
-      // 
-      this.toolStripButtonSave.Image = global::FileSyncUI.Properties.Resources.Save;
-      this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonSave.Name = "toolStripButtonSave";
-      this.toolStripButtonSave.Size = new System.Drawing.Size(51, 22);
-      this.toolStripButtonSave.Text = "Save";
-      this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
-      // 
-      // toolStripButtonSync
-      // 
-      this.toolStripButtonSync.Image = global::FileSyncUI.Properties.Resources.Sync;
-      this.toolStripButtonSync.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonSync.Name = "toolStripButtonSync";
-      this.toolStripButtonSync.Size = new System.Drawing.Size(52, 22);
-      this.toolStripButtonSync.Text = "Sync";
-      this.toolStripButtonSync.ToolTipText = "Synchronise the watchlist";
-      this.toolStripButtonSync.Click += new System.EventHandler(this.toolStripButtonSync_Click);
-      // 
-      // toolStripButtonCancel
-      // 
-      this.toolStripButtonCancel.Enabled = false;
-      this.toolStripButtonCancel.Image = global::FileSyncUI.Properties.Resources.Cancel;
-      this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonCancel.Name = "toolStripButtonCancel";
-      this.toolStripButtonCancel.Size = new System.Drawing.Size(63, 22);
-      this.toolStripButtonCancel.Text = "Cancel";
-      this.toolStripButtonCancel.Click += new System.EventHandler(this.toolStripButtonCancel_Click);
-      // 
-      // toolStripButtonExit
-      // 
-      this.toolStripButtonExit.Image = global::FileSyncUI.Properties.Resources.Exit;
-      this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonExit.Name = "toolStripButtonExit";
-      this.toolStripButtonExit.Size = new System.Drawing.Size(45, 22);
-      this.toolStripButtonExit.Text = "Exit";
-      this.toolStripButtonExit.ToolTipText = "Exit the application";
-      this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
       // 
       // statusStripMain
       // 
@@ -139,10 +96,62 @@
             this.includeSubFoldersDataGridViewCheckBoxColumn,
             this.lastSyncDateDataGridViewTextBoxColumn});
       this.gridViewWatches.DataSource = this.watchListBindingSource;
-      this.gridViewWatches.Location = new System.Drawing.Point(0, 28);
+      this.gridViewWatches.Location = new System.Drawing.Point(0, 57);
       this.gridViewWatches.Name = "gridViewWatches";
-      this.gridViewWatches.Size = new System.Drawing.Size(545, 530);
+      this.gridViewWatches.Size = new System.Drawing.Size(545, 501);
       this.gridViewWatches.TabIndex = 2;
+      // 
+      // gridViewExcludeFolders
+      // 
+      this.gridViewExcludeFolders.AllowUserToDeleteRows = false;
+      this.gridViewExcludeFolders.AutoGenerateColumns = false;
+      this.gridViewExcludeFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridViewExcludeFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.excludeFolderNameDataGridViewTextBoxColumn});
+      this.gridViewExcludeFolders.DataMember = "ExcludeFolders";
+      this.gridViewExcludeFolders.DataSource = this.watchListBindingSource;
+      this.gridViewExcludeFolders.Location = new System.Drawing.Point(551, 57);
+      this.gridViewExcludeFolders.Name = "gridViewExcludeFolders";
+      this.gridViewExcludeFolders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+      this.gridViewExcludeFolders.Size = new System.Drawing.Size(420, 249);
+      this.gridViewExcludeFolders.TabIndex = 2;
+      // 
+      // gridViewExcludeKeyWords
+      // 
+      this.gridViewExcludeKeyWords.AllowUserToDeleteRows = false;
+      this.gridViewExcludeKeyWords.AutoGenerateColumns = false;
+      this.gridViewExcludeKeyWords.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+      this.gridViewExcludeKeyWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridViewExcludeKeyWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1});
+      this.gridViewExcludeKeyWords.DataSource = this.excludeKeyWordsBindingSource;
+      this.gridViewExcludeKeyWords.Location = new System.Drawing.Point(551, 312);
+      this.gridViewExcludeKeyWords.Name = "gridViewExcludeKeyWords";
+      this.gridViewExcludeKeyWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+      this.gridViewExcludeKeyWords.Size = new System.Drawing.Size(420, 246);
+      this.gridViewExcludeKeyWords.TabIndex = 2;
+      // 
+      // dataGridViewTextBoxColumn1
+      // 
+      this.dataGridViewTextBoxColumn1.DataPropertyName = "KeyWord";
+      this.dataGridViewTextBoxColumn1.HeaderText = "KeyWord";
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      // 
+      // excludeKeyWordsBindingSource
+      // 
+      this.excludeKeyWordsBindingSource.DataMember = "ExcludeKeyWords";
+      this.excludeKeyWordsBindingSource.DataSource = this.watchListBindingSource;
+      // 
+      // watchListBindingSource
+      // 
+      this.watchListBindingSource.DataSource = typeof(FileSync.WatchList);
+      // 
+      // excludeFolderNameDataGridViewTextBoxColumn
+      // 
+      this.excludeFolderNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.excludeFolderNameDataGridViewTextBoxColumn.DataPropertyName = "ExcludeFolderName";
+      this.excludeFolderNameDataGridViewTextBoxColumn.HeaderText = "ExcludeFolderName";
+      this.excludeFolderNameDataGridViewTextBoxColumn.Name = "excludeFolderNameDataGridViewTextBoxColumn";
       // 
       // nameDataGridViewTextBoxColumn
       // 
@@ -175,37 +184,66 @@
       this.lastSyncDateDataGridViewTextBoxColumn.HeaderText = "LastSyncDate";
       this.lastSyncDateDataGridViewTextBoxColumn.Name = "lastSyncDateDataGridViewTextBoxColumn";
       // 
-      // watchListBindingSource
+      // toolStripButtonNew
       // 
-      this.watchListBindingSource.DataSource = typeof(FileSync.WatchList);
+      this.toolStripButtonNew.Image = global::FileSyncUI.Properties.Resources.New;
+      this.toolStripButtonNew.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonNew.Name = "toolStripButtonNew";
+      this.toolStripButtonNew.Size = new System.Drawing.Size(104, 51);
+      this.toolStripButtonNew.Text = "New Watch";
+      this.toolStripButtonNew.ToolTipText = "Adds a new watch to the list";
+      this.toolStripButtonNew.Click += new System.EventHandler(this.toolStripButtonNew_Click);
       // 
-      // gridViewExcludeFolders
+      // toolStripButtonSave
       // 
-      this.gridViewExcludeFolders.AllowUserToDeleteRows = false;
-      this.gridViewExcludeFolders.AutoGenerateColumns = false;
-      this.gridViewExcludeFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.gridViewExcludeFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.excludeFolderNameDataGridViewTextBoxColumn});
-      this.gridViewExcludeFolders.DataMember = "ExcludeFolders";
-      this.gridViewExcludeFolders.DataSource = this.watchListBindingSource;
-      this.gridViewExcludeFolders.Location = new System.Drawing.Point(551, 28);
-      this.gridViewExcludeFolders.Name = "gridViewExcludeFolders";
-      this.gridViewExcludeFolders.Size = new System.Drawing.Size(420, 262);
-      this.gridViewExcludeFolders.TabIndex = 2;
-      this.gridViewExcludeFolders.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.gridViewExcludeFolders_UserAddedRow);
+      this.toolStripButtonSave.Image = global::FileSyncUI.Properties.Resources.Save;
+      this.toolStripButtonSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonSave.Name = "toolStripButtonSave";
+      this.toolStripButtonSave.Size = new System.Drawing.Size(67, 51);
+      this.toolStripButtonSave.Text = "Save";
+      this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
       // 
-      // excludeFolderNameDataGridViewTextBoxColumn
+      // toolStripButtonSync
       // 
-      this.excludeFolderNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.excludeFolderNameDataGridViewTextBoxColumn.DataPropertyName = "ExcludeFolderName";
-      this.excludeFolderNameDataGridViewTextBoxColumn.HeaderText = "ExcludeFolderName";
-      this.excludeFolderNameDataGridViewTextBoxColumn.Name = "excludeFolderNameDataGridViewTextBoxColumn";
+      this.toolStripButtonSync.Image = global::FileSyncUI.Properties.Resources.Sync;
+      this.toolStripButtonSync.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonSync.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonSync.Name = "toolStripButtonSync";
+      this.toolStripButtonSync.Size = new System.Drawing.Size(68, 51);
+      this.toolStripButtonSync.Text = "Sync";
+      this.toolStripButtonSync.ToolTipText = "Synchronise the watchlist";
+      this.toolStripButtonSync.Click += new System.EventHandler(this.toolStripButtonSync_Click);
+      // 
+      // toolStripButtonCancel
+      // 
+      this.toolStripButtonCancel.Enabled = false;
+      this.toolStripButtonCancel.Image = global::FileSyncUI.Properties.Resources.Cancel;
+      this.toolStripButtonCancel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCancel.Name = "toolStripButtonCancel";
+      this.toolStripButtonCancel.Size = new System.Drawing.Size(71, 51);
+      this.toolStripButtonCancel.Text = "Cancel";
+      this.toolStripButtonCancel.Click += new System.EventHandler(this.toolStripButtonCancel_Click);
+      // 
+      // toolStripButtonExit
+      // 
+      this.toolStripButtonExit.Image = global::FileSyncUI.Properties.Resources.Exit;
+      this.toolStripButtonExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonExit.Name = "toolStripButtonExit";
+      this.toolStripButtonExit.Size = new System.Drawing.Size(61, 51);
+      this.toolStripButtonExit.Text = "Exit";
+      this.toolStripButtonExit.ToolTipText = "Exit the application";
+      this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
       // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(983, 583);
+      this.Controls.Add(this.gridViewExcludeKeyWords);
       this.Controls.Add(this.gridViewExcludeFolders);
       this.Controls.Add(this.gridViewWatches);
       this.Controls.Add(this.statusStripMain);
@@ -217,8 +255,10 @@
       this.statusStripMain.ResumeLayout(false);
       this.statusStripMain.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewWatches)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeFolders)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeKeyWords)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.excludeKeyWordsBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -244,6 +284,9 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn excludeFolderNameDataGridViewTextBoxColumn;
     private System.Windows.Forms.ToolStripButton toolStripButtonSave;
     private System.Windows.Forms.ToolStripButton toolStripButtonCancel;
+    private System.Windows.Forms.DataGridView gridViewExcludeKeyWords;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+    private System.Windows.Forms.BindingSource excludeKeyWordsBindingSource;
   }
 }
 

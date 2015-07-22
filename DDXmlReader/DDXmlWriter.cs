@@ -208,7 +208,7 @@ namespace DDXmlLib
           continue;
         }
 
-        if (element[identifier.Name] == null)
+        if (element[identifier.Name] == null || element[identifier.Name].InnerXml != updateElement[identifier.Name].InnerXml)
           continue;
 
         foreach (XmlElement updateProperty in updateElement.ChildNodes)

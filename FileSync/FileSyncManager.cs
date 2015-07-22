@@ -173,13 +173,13 @@ namespace FileSync
             string[] valArray = val.Split(new string[] { Environment.NewLine, " " }, StringSplitOptions.None);
             if (valArray != null && valArray.Length > 0)
             {
-              watchItem.ExcludeKeyWords = new List<string>();
+              watchItem.ExcludeKeyWords = new List<ExcludeKeyWord>();
               foreach (string value in valArray)
               {
                 if (val == string.Empty)
                   continue;
 
-                watchItem.ExcludeKeyWords.Add(value);
+                watchItem.ExcludeKeyWords.Add(new ExcludeKeyWord() { KeyWord = value });
               }
             }
 
@@ -305,7 +305,7 @@ namespace FileSync
         if (Cancel)
           return;
 
-        var skipFile = watch.ExcludeKeyWords.FindAll(s => s.IndexOf(file.Name.ToLower()) >= 0);
+        var skipFile = watch.ExcludeKeyWords.FindAll(s => s.KeyWord?.IndexOf(file.Name.ToLower()) >= 0);
         if (skipFile.Count > 0)
           continue;
 

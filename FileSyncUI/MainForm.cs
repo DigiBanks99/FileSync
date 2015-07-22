@@ -229,15 +229,7 @@ namespace FileSyncUI
 
     private void gridViewExcludeFolders_UserAddedRow(object sender, DataGridViewRowEventArgs e)
     {
-      var watchItem = watchListBindingSource.Current as WatchItem;
-      if (watchItem == null)
-        return;
 
-      if (watchItem.ExcludeFolders == null)
-      {
-        watchItem.ExcludeFolders = new List<ExcludeFolder>();
-        //watchItem.ExcludeFolders.Add((ExcludeFolder)e.Row);
-      }
     }
 
     private void ProgressChanged(object sender, FileSyncEventArgs e)

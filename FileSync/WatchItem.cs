@@ -7,6 +7,14 @@ namespace FileSync
 {
   public class WatchItem : INotifyPropertyChanged
   {
+    #region Constructor
+    public WatchItem()
+    {
+      ExcludeKeyWords = new List<ExcludeKeyWord>();
+      ExcludeFolders = new List<ExcludeFolder>();
+    }
+    #endregion Constructor
+
     #region Properties
     private string _name;
     public string Name
@@ -52,8 +60,8 @@ namespace FileSync
       }
     }
 
-    private List<string> _excludeKeyWords;
-    public List<string> ExcludeKeyWords
+    private List<ExcludeKeyWord> _excludeKeyWords;
+    public List<ExcludeKeyWord> ExcludeKeyWords
     {
       get { return _excludeKeyWords; }
       set
