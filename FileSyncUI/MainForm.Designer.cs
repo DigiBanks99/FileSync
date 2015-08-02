@@ -17,32 +17,43 @@
     {
       this.components = new System.ComponentModel.Container();
       this.toolStripMain = new System.Windows.Forms.ToolStrip();
+      this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonSync = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonResetForDev = new System.Windows.Forms.ToolStripButton();
       this.statusStripMain = new System.Windows.Forms.StatusStrip();
       this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
       this.toolStripStatusLabelMain = new System.Windows.Forms.ToolStripStatusLabel();
       this.gridViewWatches = new System.Windows.Forms.DataGridView();
       this.gridViewExcludeFolders = new System.Windows.Forms.DataGridView();
       this.gridViewExcludeKeyWords = new System.Windows.Forms.DataGridView();
-      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.excludeKeyWordsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.watchListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.excludeFolderNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.splitContainerChildren = new System.Windows.Forms.SplitContainer();
+      this.splitContainerMain = new System.Windows.Forms.SplitContainer();
       this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.sourcePathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.destinationPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.includeSubFoldersDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.lastSyncDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonSync = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+      this.watchListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.excludeFolderNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.toolStripMain.SuspendLayout();
       this.statusStripMain.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewWatches)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeFolders)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeKeyWords)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.excludeKeyWordsBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerChildren)).BeginInit();
+      this.splitContainerChildren.Panel1.SuspendLayout();
+      this.splitContainerChildren.Panel2.SuspendLayout();
+      this.splitContainerChildren.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
+      this.splitContainerMain.Panel1.SuspendLayout();
+      this.splitContainerMain.Panel2.SuspendLayout();
+      this.splitContainerMain.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
@@ -53,136 +64,14 @@
             this.toolStripButtonSave,
             this.toolStripButtonSync,
             this.toolStripButtonCancel,
+            this.toolStripButtonResetForDev,
             this.toolStripButtonExit});
       this.toolStripMain.Location = new System.Drawing.Point(0, 0);
       this.toolStripMain.MinimumSize = new System.Drawing.Size(0, 54);
       this.toolStripMain.Name = "toolStripMain";
-      this.toolStripMain.Size = new System.Drawing.Size(983, 54);
+      this.toolStripMain.Size = new System.Drawing.Size(1086, 54);
       this.toolStripMain.TabIndex = 0;
       this.toolStripMain.Text = "toolStripMain";
-      // 
-      // statusStripMain
-      // 
-      this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar,
-            this.toolStripStatusLabelMain});
-      this.statusStripMain.Location = new System.Drawing.Point(0, 561);
-      this.statusStripMain.Name = "statusStripMain";
-      this.statusStripMain.Size = new System.Drawing.Size(983, 22);
-      this.statusStripMain.TabIndex = 1;
-      this.statusStripMain.Text = "statusStrip1";
-      // 
-      // toolStripProgressBar
-      // 
-      this.toolStripProgressBar.Name = "toolStripProgressBar";
-      this.toolStripProgressBar.Size = new System.Drawing.Size(200, 16);
-      // 
-      // toolStripStatusLabelMain
-      // 
-      this.toolStripStatusLabelMain.Name = "toolStripStatusLabelMain";
-      this.toolStripStatusLabelMain.Size = new System.Drawing.Size(148, 17);
-      this.toolStripStatusLabelMain.Text = "The status will display here";
-      // 
-      // gridViewWatches
-      // 
-      this.gridViewWatches.AllowUserToAddRows = false;
-      this.gridViewWatches.AllowUserToDeleteRows = false;
-      this.gridViewWatches.AutoGenerateColumns = false;
-      this.gridViewWatches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.gridViewWatches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.sourcePathDataGridViewTextBoxColumn,
-            this.destinationPathDataGridViewTextBoxColumn,
-            this.includeSubFoldersDataGridViewCheckBoxColumn,
-            this.lastSyncDateDataGridViewTextBoxColumn});
-      this.gridViewWatches.DataSource = this.watchListBindingSource;
-      this.gridViewWatches.Location = new System.Drawing.Point(0, 57);
-      this.gridViewWatches.Name = "gridViewWatches";
-      this.gridViewWatches.Size = new System.Drawing.Size(545, 501);
-      this.gridViewWatches.TabIndex = 2;
-      // 
-      // gridViewExcludeFolders
-      // 
-      this.gridViewExcludeFolders.AllowUserToDeleteRows = false;
-      this.gridViewExcludeFolders.AutoGenerateColumns = false;
-      this.gridViewExcludeFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.gridViewExcludeFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.excludeFolderNameDataGridViewTextBoxColumn});
-      this.gridViewExcludeFolders.DataMember = "ExcludeFolders";
-      this.gridViewExcludeFolders.DataSource = this.watchListBindingSource;
-      this.gridViewExcludeFolders.Location = new System.Drawing.Point(551, 57);
-      this.gridViewExcludeFolders.Name = "gridViewExcludeFolders";
-      this.gridViewExcludeFolders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.gridViewExcludeFolders.Size = new System.Drawing.Size(420, 249);
-      this.gridViewExcludeFolders.TabIndex = 2;
-      // 
-      // gridViewExcludeKeyWords
-      // 
-      this.gridViewExcludeKeyWords.AllowUserToDeleteRows = false;
-      this.gridViewExcludeKeyWords.AutoGenerateColumns = false;
-      this.gridViewExcludeKeyWords.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-      this.gridViewExcludeKeyWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.gridViewExcludeKeyWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1});
-      this.gridViewExcludeKeyWords.DataSource = this.excludeKeyWordsBindingSource;
-      this.gridViewExcludeKeyWords.Location = new System.Drawing.Point(551, 312);
-      this.gridViewExcludeKeyWords.Name = "gridViewExcludeKeyWords";
-      this.gridViewExcludeKeyWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.gridViewExcludeKeyWords.Size = new System.Drawing.Size(420, 246);
-      this.gridViewExcludeKeyWords.TabIndex = 2;
-      // 
-      // dataGridViewTextBoxColumn1
-      // 
-      this.dataGridViewTextBoxColumn1.DataPropertyName = "KeyWord";
-      this.dataGridViewTextBoxColumn1.HeaderText = "KeyWord";
-      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-      // 
-      // excludeKeyWordsBindingSource
-      // 
-      this.excludeKeyWordsBindingSource.DataMember = "ExcludeKeyWords";
-      this.excludeKeyWordsBindingSource.DataSource = this.watchListBindingSource;
-      // 
-      // watchListBindingSource
-      // 
-      this.watchListBindingSource.DataSource = typeof(FileSync.WatchList);
-      // 
-      // excludeFolderNameDataGridViewTextBoxColumn
-      // 
-      this.excludeFolderNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.excludeFolderNameDataGridViewTextBoxColumn.DataPropertyName = "ExcludeFolderName";
-      this.excludeFolderNameDataGridViewTextBoxColumn.HeaderText = "ExcludeFolderName";
-      this.excludeFolderNameDataGridViewTextBoxColumn.Name = "excludeFolderNameDataGridViewTextBoxColumn";
-      // 
-      // nameDataGridViewTextBoxColumn
-      // 
-      this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-      this.nameDataGridViewTextBoxColumn.Frozen = true;
-      this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-      this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-      // 
-      // sourcePathDataGridViewTextBoxColumn
-      // 
-      this.sourcePathDataGridViewTextBoxColumn.DataPropertyName = "SourcePath";
-      this.sourcePathDataGridViewTextBoxColumn.HeaderText = "SourcePath";
-      this.sourcePathDataGridViewTextBoxColumn.Name = "sourcePathDataGridViewTextBoxColumn";
-      // 
-      // destinationPathDataGridViewTextBoxColumn
-      // 
-      this.destinationPathDataGridViewTextBoxColumn.DataPropertyName = "DestinationPath";
-      this.destinationPathDataGridViewTextBoxColumn.HeaderText = "DestinationPath";
-      this.destinationPathDataGridViewTextBoxColumn.Name = "destinationPathDataGridViewTextBoxColumn";
-      // 
-      // includeSubFoldersDataGridViewCheckBoxColumn
-      // 
-      this.includeSubFoldersDataGridViewCheckBoxColumn.DataPropertyName = "IncludeSubFolders";
-      this.includeSubFoldersDataGridViewCheckBoxColumn.HeaderText = "IncludeSubFolders";
-      this.includeSubFoldersDataGridViewCheckBoxColumn.Name = "includeSubFoldersDataGridViewCheckBoxColumn";
-      // 
-      // lastSyncDateDataGridViewTextBoxColumn
-      // 
-      this.lastSyncDateDataGridViewTextBoxColumn.DataPropertyName = "LastSyncDate";
-      this.lastSyncDateDataGridViewTextBoxColumn.HeaderText = "LastSyncDate";
-      this.lastSyncDateDataGridViewTextBoxColumn.Name = "lastSyncDateDataGridViewTextBoxColumn";
       // 
       // toolStripButtonNew
       // 
@@ -238,14 +127,195 @@
       this.toolStripButtonExit.ToolTipText = "Exit the application";
       this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
       // 
+      // toolStripButtonResetForDev
+      // 
+      this.toolStripButtonResetForDev.Image = global::FileSyncUI.Properties.Resources.Settings;
+      this.toolStripButtonResetForDev.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+      this.toolStripButtonResetForDev.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonResetForDev.Name = "toolStripButtonResetForDev";
+      this.toolStripButtonResetForDev.Size = new System.Drawing.Size(114, 51);
+      this.toolStripButtonResetForDev.Text = "Reset For Dev";
+      this.toolStripButtonResetForDev.Visible = false;
+      this.toolStripButtonResetForDev.Click += new System.EventHandler(this.toolStripButtonResetForDev_Click);
+      // 
+      // statusStripMain
+      // 
+      this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar,
+            this.toolStripStatusLabelMain});
+      this.statusStripMain.Location = new System.Drawing.Point(0, 706);
+      this.statusStripMain.Name = "statusStripMain";
+      this.statusStripMain.Size = new System.Drawing.Size(1086, 22);
+      this.statusStripMain.TabIndex = 1;
+      this.statusStripMain.Text = "statusStrip1";
+      // 
+      // toolStripProgressBar
+      // 
+      this.toolStripProgressBar.Name = "toolStripProgressBar";
+      this.toolStripProgressBar.Size = new System.Drawing.Size(200, 16);
+      this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+      // 
+      // toolStripStatusLabelMain
+      // 
+      this.toolStripStatusLabelMain.Name = "toolStripStatusLabelMain";
+      this.toolStripStatusLabelMain.Size = new System.Drawing.Size(148, 17);
+      this.toolStripStatusLabelMain.Text = "The status will display here";
+      // 
+      // gridViewWatches
+      // 
+      this.gridViewWatches.AllowUserToAddRows = false;
+      this.gridViewWatches.AllowUserToDeleteRows = false;
+      this.gridViewWatches.AutoGenerateColumns = false;
+      this.gridViewWatches.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+      this.gridViewWatches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridViewWatches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.sourcePathDataGridViewTextBoxColumn,
+            this.destinationPathDataGridViewTextBoxColumn,
+            this.includeSubFoldersDataGridViewCheckBoxColumn,
+            this.lastSyncDateDataGridViewTextBoxColumn});
+      this.gridViewWatches.DataSource = this.watchListBindingSource;
+      this.gridViewWatches.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridViewWatches.Location = new System.Drawing.Point(0, 0);
+      this.gridViewWatches.Name = "gridViewWatches";
+      this.gridViewWatches.Size = new System.Drawing.Size(800, 652);
+      this.gridViewWatches.TabIndex = 2;
+      // 
+      // gridViewExcludeFolders
+      // 
+      this.gridViewExcludeFolders.AllowUserToDeleteRows = false;
+      this.gridViewExcludeFolders.AutoGenerateColumns = false;
+      this.gridViewExcludeFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridViewExcludeFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.excludeFolderNameDataGridViewTextBoxColumn});
+      this.gridViewExcludeFolders.DataMember = "ExcludeFolders";
+      this.gridViewExcludeFolders.DataSource = this.watchListBindingSource;
+      this.gridViewExcludeFolders.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridViewExcludeFolders.Location = new System.Drawing.Point(0, 0);
+      this.gridViewExcludeFolders.Name = "gridViewExcludeFolders";
+      this.gridViewExcludeFolders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+      this.gridViewExcludeFolders.Size = new System.Drawing.Size(282, 258);
+      this.gridViewExcludeFolders.TabIndex = 2;
+      // 
+      // gridViewExcludeKeyWords
+      // 
+      this.gridViewExcludeKeyWords.AllowUserToDeleteRows = false;
+      this.gridViewExcludeKeyWords.AutoGenerateColumns = false;
+      this.gridViewExcludeKeyWords.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+      this.gridViewExcludeKeyWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridViewExcludeKeyWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1});
+      this.gridViewExcludeKeyWords.DataSource = this.excludeKeyWordsBindingSource;
+      this.gridViewExcludeKeyWords.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridViewExcludeKeyWords.Location = new System.Drawing.Point(0, 0);
+      this.gridViewExcludeKeyWords.Name = "gridViewExcludeKeyWords";
+      this.gridViewExcludeKeyWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+      this.gridViewExcludeKeyWords.Size = new System.Drawing.Size(282, 390);
+      this.gridViewExcludeKeyWords.TabIndex = 2;
+      // 
+      // excludeKeyWordsBindingSource
+      // 
+      this.excludeKeyWordsBindingSource.DataMember = "ExcludeKeyWords";
+      this.excludeKeyWordsBindingSource.DataSource = this.watchListBindingSource;
+      // 
+      // splitContainerChildren
+      // 
+      this.splitContainerChildren.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainerChildren.Location = new System.Drawing.Point(0, 0);
+      this.splitContainerChildren.Name = "splitContainerChildren";
+      this.splitContainerChildren.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainerChildren.Panel1
+      // 
+      this.splitContainerChildren.Panel1.AccessibleName = "panelExcludeFolders";
+      this.splitContainerChildren.Panel1.Controls.Add(this.gridViewExcludeFolders);
+      // 
+      // splitContainerChildren.Panel2
+      // 
+      this.splitContainerChildren.Panel2.AccessibleName = "panelExcludeKeyWords";
+      this.splitContainerChildren.Panel2.Controls.Add(this.gridViewExcludeKeyWords);
+      this.splitContainerChildren.Size = new System.Drawing.Size(282, 652);
+      this.splitContainerChildren.SplitterDistance = 258;
+      this.splitContainerChildren.TabIndex = 2;
+      // 
+      // splitContainerMain
+      // 
+      this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainerMain.Location = new System.Drawing.Point(0, 54);
+      this.splitContainerMain.Name = "splitContainerMain";
+      // 
+      // splitContainerMain.Panel1
+      // 
+      this.splitContainerMain.Panel1.AccessibleName = "panelMain";
+      this.splitContainerMain.Panel1.Controls.Add(this.gridViewWatches);
+      // 
+      // splitContainerMain.Panel2
+      // 
+      this.splitContainerMain.Panel2.AccessibleName = "panelChildren";
+      this.splitContainerMain.Panel2.Controls.Add(this.splitContainerChildren);
+      this.splitContainerMain.Size = new System.Drawing.Size(1086, 652);
+      this.splitContainerMain.SplitterDistance = 800;
+      this.splitContainerMain.TabIndex = 4;
+      // 
+      // nameDataGridViewTextBoxColumn
+      // 
+      this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+      this.nameDataGridViewTextBoxColumn.Frozen = true;
+      this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+      this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+      this.nameDataGridViewTextBoxColumn.Width = 60;
+      // 
+      // sourcePathDataGridViewTextBoxColumn
+      // 
+      this.sourcePathDataGridViewTextBoxColumn.DataPropertyName = "SourcePath";
+      this.sourcePathDataGridViewTextBoxColumn.HeaderText = "SourcePath";
+      this.sourcePathDataGridViewTextBoxColumn.Name = "sourcePathDataGridViewTextBoxColumn";
+      this.sourcePathDataGridViewTextBoxColumn.Width = 88;
+      // 
+      // destinationPathDataGridViewTextBoxColumn
+      // 
+      this.destinationPathDataGridViewTextBoxColumn.DataPropertyName = "DestinationPath";
+      this.destinationPathDataGridViewTextBoxColumn.HeaderText = "DestinationPath";
+      this.destinationPathDataGridViewTextBoxColumn.Name = "destinationPathDataGridViewTextBoxColumn";
+      this.destinationPathDataGridViewTextBoxColumn.Width = 107;
+      // 
+      // includeSubFoldersDataGridViewCheckBoxColumn
+      // 
+      this.includeSubFoldersDataGridViewCheckBoxColumn.DataPropertyName = "IncludeSubFolders";
+      this.includeSubFoldersDataGridViewCheckBoxColumn.HeaderText = "IncludeSubFolders";
+      this.includeSubFoldersDataGridViewCheckBoxColumn.Name = "includeSubFoldersDataGridViewCheckBoxColumn";
+      this.includeSubFoldersDataGridViewCheckBoxColumn.Width = 101;
+      // 
+      // lastSyncDateDataGridViewTextBoxColumn
+      // 
+      this.lastSyncDateDataGridViewTextBoxColumn.DataPropertyName = "LastSyncDate";
+      this.lastSyncDateDataGridViewTextBoxColumn.HeaderText = "LastSyncDate";
+      this.lastSyncDateDataGridViewTextBoxColumn.Name = "lastSyncDateDataGridViewTextBoxColumn";
+      this.lastSyncDateDataGridViewTextBoxColumn.Width = 99;
+      // 
+      // watchListBindingSource
+      // 
+      this.watchListBindingSource.DataSource = typeof(FileSync.WatchList);
+      // 
+      // excludeFolderNameDataGridViewTextBoxColumn
+      // 
+      this.excludeFolderNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.excludeFolderNameDataGridViewTextBoxColumn.DataPropertyName = "ExcludeFolderName";
+      this.excludeFolderNameDataGridViewTextBoxColumn.HeaderText = "ExcludeFolderName";
+      this.excludeFolderNameDataGridViewTextBoxColumn.Name = "excludeFolderNameDataGridViewTextBoxColumn";
+      // 
+      // dataGridViewTextBoxColumn1
+      // 
+      this.dataGridViewTextBoxColumn1.DataPropertyName = "KeyWord";
+      this.dataGridViewTextBoxColumn1.HeaderText = "KeyWord";
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(983, 583);
-      this.Controls.Add(this.gridViewExcludeKeyWords);
-      this.Controls.Add(this.gridViewExcludeFolders);
-      this.Controls.Add(this.gridViewWatches);
+      this.ClientSize = new System.Drawing.Size(1086, 728);
+      this.Controls.Add(this.splitContainerMain);
       this.Controls.Add(this.statusStripMain);
       this.Controls.Add(this.toolStripMain);
       this.Name = "MainForm";
@@ -258,6 +328,14 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeFolders)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridViewExcludeKeyWords)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.excludeKeyWordsBindingSource)).EndInit();
+      this.splitContainerChildren.Panel1.ResumeLayout(false);
+      this.splitContainerChildren.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerChildren)).EndInit();
+      this.splitContainerChildren.ResumeLayout(false);
+      this.splitContainerMain.Panel1.ResumeLayout(false);
+      this.splitContainerMain.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
+      this.splitContainerMain.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.watchListBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -287,6 +365,9 @@
     private System.Windows.Forms.DataGridView gridViewExcludeKeyWords;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     private System.Windows.Forms.BindingSource excludeKeyWordsBindingSource;
+    private System.Windows.Forms.ToolStripButton toolStripButtonResetForDev;
+    private System.Windows.Forms.SplitContainer splitContainerChildren;
+    private System.Windows.Forms.SplitContainer splitContainerMain;
   }
 }
 

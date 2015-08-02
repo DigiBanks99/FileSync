@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml;
+using System.Threading;
 
 namespace FileSync
 {
   public class WatchItem : INotifyPropertyChanged
   {
+
+    #region Private Members
+    private SynchronizationContext _context;
+    #endregion Private Members
+
     #region Constructor
     public WatchItem()
     {
       ExcludeKeyWords = new List<ExcludeKeyWord>();
       ExcludeFolders = new List<ExcludeFolder>();
+      _context = SynchronizationContext.Current ?? new SynchronizationContext();
     }
     #endregion Constructor
 
@@ -100,7 +106,7 @@ namespace FileSync
     private void NotifyPropertyChanged(string propertyName)
     {
       if (PropertyChanged != null)
-        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        _context.Post(changed => PropertyChanged(this, new PropertyChangedEventArgs(propertyName)), null);
     }
     #endregion Events and Delegates
   }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using DDXmlLib.ExceptionHandling;
+using System.Threading.Tasks;
 
 namespace DDXmlLib
 {
@@ -195,6 +196,35 @@ namespace DDXmlLib
       }
     }
 
+    public async static Task UpdateElementsAsync(string filePath, string identifierName, IEnumerable<XmlNode> updateElements)
+    {
+      XmlDocument document = null;
+      try
+      {
+        document = await DDXmlReader.ReadDocumentAsync(filePath);
+      }
+      catch (IOException ex)
+      {
+        throw ex;
+      }
+
+      if (document == null)
+        return; // TODO: handle a document that cannot be read
+
+      foreach (XmlElement updateElement in updateElements)
+      {
+        // Find the identifier element
+        XmlElement identifier = updateElement[identifierName];
+        if (identifier == null)
+          continue; // TODO: handle elements that don't have a valid identifier when updating the watch list
+
+        if (document.HasChildNodes)
+          UpdateChildElements(updateElement, identifier, document.ChildNodes, document);
+
+        await Task.Factory.StartNew(() => document.Save(filePath));
+      }
+    }
+
     public static void UpdateChildElements(XmlElement updateElement, XmlElement identifier, XmlNodeList childNodes, XmlDocument document)
     {
       foreach (XmlElement element in childNodes)
@@ -220,6 +250,14 @@ namespace DDXmlLib
           }
 
           element[updateProperty.Name].InnerXml = updateProperty.InnerXml;
+        }
+
+        for (int i = element.ChildNodes.Count - 1; i >= 0; i--)
+        {
+          var property = element.ChildNodes[i];
+
+          if (updateElement[property.Name] == null)
+            element.RemoveChild(property);
         }
       }
     }

@@ -4,27 +4,69 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using DDXmlLib;
+using System.Threading;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace FileSync
 {
   public class FileSyncManager
   {
-    #region Public Properties
-    public string WatchFilePath
+
+    #region Constructor
+    private FileSyncManager()
     {
-      get;
-      set;
+      _context = SynchronizationContext.Current ?? new SynchronizationContext();
+    }
+    #endregion Constructor
+
+    #region Private Members
+    private SynchronizationContext _context;
+    [NonSerialized]
+    private string _watchFilePath = string.Empty;
+    [NonSerialized]
+    private bool _cancel;
+    [NonSerialized]
+    private static FileSyncManager _manager = null;
+    private static object objLock = new object();
+    #endregion Private Members
+
+    #region Public Properties
+    public static FileSyncManager Manager
+    {
+      get
+      {
+        if (_manager != null)
+          return _manager;
+
+        lock (objLock)
+        {
+          if (_manager != null)
+            return _manager;
+          return _manager = new FileSyncManager();
+        }
+      }
     }
 
-    private bool _cancel;
+    public string WatchFilePath
+    {
+      get
+      {
+        return _watchFilePath;
+      }
+      set
+      {
+        _watchFilePath = value;
+      }
+    }
+
     public bool Cancel
     {
       get { return _cancel; }
       set
       {
         _cancel = value;
-        if (!value && OnCancel != null)
-          OnCancel(this, new CancelEventArgs(value, "Canceled."));
+        RaiseCancelInContext(this, value);
       }
     }
 
@@ -32,12 +74,14 @@ namespace FileSync
     #endregion Public Properties
 
     #region Events & Delegates
-    public delegate void ProgressChangedHandler(object sender, FileSyncEventArgs e);
-    public delegate void ProgressChangingHandler(object sender, FileSyncEventArgs e);
+    public delegate void FileCopiedEventHandler(object sender, FileSyncEventArgs e);
+    public delegate void FileCopyingEventHandler(object sender, FileSyncEventArgs e);
     public delegate void CanceledEventHandler(object sender, CancelEventArgs e);
-    public event ProgressChangedHandler OnProgressChanged;
-    public event ProgressChangingHandler OnProgressChanging;
+    public delegate void ProgressChangedEventHandler(object sender, int newValue);
+    public event FileCopiedEventHandler OnFileCopied;
+    public event FileCopyingEventHandler OnFileCopying;
     public event CanceledEventHandler OnCancel;
+    public event ProgressChangedEventHandler OnProgressChanged;
     #endregion Events & Delegates
 
     #region Public Methods
@@ -66,46 +110,18 @@ namespace FileSync
 
     public void Sync(WatchList watchList = null)
     {
-      if (watchList == null)
-        watchList = ReadWatchList();
+      var updateNodeList = DoSynchronization();
 
-      if (watchList == null)
-      {
-        Logger.Warning("Nothing has been listed for synchronisation");
-        return;
-      }
-
-      SyncedFiles = new Dictionary<string, List<string>>();
-      List<XmlNode> updateNodeList = new List<XmlNode>();
-
-      // Itterate through each watch item and take the appropriate action
-      foreach (var watchItem in watchList)
-      {
-        // If the destination does not exist, create it
-        if (!Directory.Exists(watchItem.DestinationPath))
-          Directory.CreateDirectory(watchItem.DestinationPath);
-
-        var sourceDirInfo = new DirectoryInfo(watchItem.SourcePath);
-        var destDirInfo = new DirectoryInfo(watchItem.DestinationPath);
-
-        // If the last sync date is after the last write time for the source directory, don't take any action
-        if (watchItem.LastSyncDate.HasValue && watchItem.LastSyncDate.Value >= sourceDirInfo.LastWriteTime)
-        {
-          Logger.Info(string.Format("Nothing to sync for {0}", watchItem.Name));
-          continue;
-        }
-
-        Logger.Info(string.Format("Copying files for {0}...", watchItem.Name));
-
-        watchItem.LastSyncDate = DateTime.Now;
-        UpdateWatchItem(watchItem, updateNodeList);
-
-        SyncFolders(watchItem, sourceDirInfo, destDirInfo);
-        CopyFilesInDirectory(sourceDirInfo, watchItem, destDirInfo, string.Empty);
-      }
-
-      if (updateNodeList.Any())
+      if (updateNodeList != null && updateNodeList.Any())
         UpdateWatchList(updateNodeList);
+    }
+
+    public async Task SyncAsync(WatchList watchList = null)
+    {
+      var updateNodeList = DoSynchronization();
+
+      if (updateNodeList != null && updateNodeList.Any())
+        await UpdateWatchListAsync(updateNodeList);
     }
 
     public List<XmlNode> UpdateWatchItem(WatchItem watchItem, List<XmlNode> updateNodeList = null)
@@ -116,26 +132,6 @@ namespace FileSync
       updateNodeList.Add(DDXmlWriter.CreateXmlNode(watchItem));
 
       return updateNodeList;
-    }
-
-    private void SyncFolders(WatchItem watchItem, DirectoryInfo sourceDirInfo, DirectoryInfo destDirInfo)
-    {
-      var sourceDirectories = sourceDirInfo.GetDirectories();
-      foreach (var dir in sourceDirectories)
-      {
-        // Don't copy folders that have been marked for exclusion
-        if (watchItem.ExcludeFolders != null && watchItem.ExcludeFolders.Contains(dir.Name))
-          continue;
-
-        // Create the directory if it does not exist
-        if (!Directory.Exists(Path.Combine(destDirInfo.FullName, dir.Name)))
-          Directory.CreateDirectory(Path.Combine(destDirInfo.FullName, dir.Name));
-
-        SyncFolders(watchItem, dir, new DirectoryInfo(Path.Combine(destDirInfo.FullName, dir.Name)));
-
-        // Get the files in the directory and copy the files
-        CopyFilesInDirectory(dir, watchItem, destDirInfo, dir.Name);
-      }
     }
 
     public void UpdateWatchList(List<XmlNode> updateNodeList)
@@ -150,13 +146,25 @@ namespace FileSync
       }
     }
 
+    public async Task UpdateWatchListAsync(List<XmlNode> updateNodeList)
+    {
+      try
+      {
+        await DDXmlWriter.UpdateElementsAsync(WatchFilePath, "Name", updateNodeList);
+      }
+      catch (IOException ex)
+      {
+        Logger.Error("Update Watch List Error: " + ex.Message);
+      }
+    }
+
     public WatchList ReadWatchList()
     {
       var elements = DDXmlReader.ReadElements(WatchFilePath, typeof(WatchItem).Name);
       if (elements == null)
       {
         Logger.Error("Failed to load Watch Items from the file...");
-        return null;
+        return new WatchList();
       }
 
       WatchList list = new WatchList();
@@ -291,6 +299,75 @@ namespace FileSync
     #endregion Public Methods
 
     #region Private Methods
+    private List<XmlNode> DoSynchronization(WatchList watchList = null)
+    {
+      if (watchList == null)
+        watchList = ReadWatchList();
+
+      if (watchList == null)
+      {
+        Logger.Warning("Nothing has been listed for synchronisation");
+        return null;
+      }
+
+      SyncedFiles = new Dictionary<string, List<string>>();
+      List<XmlNode> updateNodeList = new List<XmlNode>();
+
+      var cnt = 0;
+      // Itterate through each watch item and take the appropriate action
+      foreach (var watchItem in watchList)
+      {
+        if (Cancel)
+          return null;
+
+        // If the destination does not exist, create it
+        if (!Directory.Exists(watchItem.DestinationPath))
+          Directory.CreateDirectory(watchItem.DestinationPath);
+
+        var sourceDirInfo = new DirectoryInfo(watchItem.SourcePath);
+        var destDirInfo = new DirectoryInfo(watchItem.DestinationPath);
+
+        // If the last sync date is after the last write time for the source directory, don't take any action
+        if (watchItem.LastSyncDate.HasValue && watchItem.LastSyncDate.Value >= sourceDirInfo.LastWriteTime)
+        {
+          Logger.Info(string.Format("Nothing to sync for {0}", watchItem.Name));
+          RaiseProgressChangedInContext(this, ++cnt);
+          continue;
+        }
+
+        Logger.Info(string.Format("Copying files for {0}...", watchItem.Name));
+
+        SyncFolders(watchItem, sourceDirInfo, destDirInfo);
+        CopyFilesInDirectory(sourceDirInfo, watchItem, destDirInfo, string.Empty);
+
+        watchItem.LastSyncDate = DateTime.Now;
+        UpdateWatchItem(watchItem, updateNodeList);
+        RaiseProgressChangedInContext(this, ++cnt);
+      }
+
+      return updateNodeList;
+    }
+
+    private void SyncFolders(WatchItem watchItem, DirectoryInfo sourceDirInfo, DirectoryInfo destDirInfo)
+    {
+      var sourceDirectories = sourceDirInfo.GetDirectories();
+      foreach (var dir in sourceDirectories)
+      {
+        // Don't copy folders that have been marked for exclusion
+        if (watchItem.ExcludeFolders != null && watchItem.ExcludeFolders.Contains(dir.Name))
+          continue;
+
+        // Create the directory if it does not exist
+        if (!Directory.Exists(Path.Combine(destDirInfo.FullName, dir.Name)))
+          Directory.CreateDirectory(Path.Combine(destDirInfo.FullName, dir.Name));
+
+        SyncFolders(watchItem, dir, new DirectoryInfo(Path.Combine(destDirInfo.FullName, dir.Name)));
+
+        // Get the files in the directory and copy the files
+        CopyFilesInDirectory(dir, watchItem, destDirInfo, dir.Name);
+      }
+    }
+
     private void CopyFilesInDirectory(DirectoryInfo sourceDir, WatchItem watch, DirectoryInfo destDirInfo, string subDirectory)
     {
       if (sourceDir == null)
@@ -305,21 +382,18 @@ namespace FileSync
         if (Cancel)
           return;
 
-        var skipFile = watch.ExcludeKeyWords.FindAll(s => s.KeyWord?.IndexOf(file.Name.ToLower()) >= 0);
+        var skipFile = watch.ExcludeKeyWords.FindAll(s => file.Name.ToLower()?.IndexOf(s.KeyWord?.ToLower()) >= 0);
         if (skipFile.Count > 0)
           continue;
 
         if (File.Exists(Path.Combine(destDirInfo.FullName, subDirectory, file.Name)))
           continue;
 
-        if (OnProgressChanging != null)
-          OnProgressChanging(this, new FileSyncEventArgs(string.Format("Copying {0}...", file.Name)));
+        string fileName = $"{subDirectory}{(subDirectory.Length > 0 ? "," : string.Empty)}{file.Name}";
 
+        RaiseOnCopyingFileInContext(this, $"Copying {file.Name}...");
         File.Copy(file.FullName, Path.Combine(destDirInfo.FullName, subDirectory, file.Name));
-
-        string fileName = string.Format("{0}{1}{2}", subDirectory, subDirectory.Length > 0 ? "/" : string.Empty, file.Name);
-        if (OnProgressChanged != null)
-          OnProgressChanged(this, new FileSyncEventArgs(string.Format("Copied {0}: {1}", file.Name, fileName)));
+        RaiseOnFileCopiedInContext(this, $"Copied {file.Name}: {fileName}");
 
         // Added synced file to list of synced files
         if (!SyncedFiles.ContainsKey(watch.Name))
@@ -327,6 +401,38 @@ namespace FileSync
 
         SyncedFiles[watch.Name].Add(fileName);
       }
+    }
+
+    private void RaiseOnFileCopiedInContext(object sender, string message)
+    {
+      if (OnFileCopied == null)
+        return;
+
+      _context?.Post(changed => OnFileCopied(this, new FileSyncEventArgs(message)), sender);
+    }
+
+    private void RaiseOnCopyingFileInContext(object sender, string message)
+    {
+      if (OnFileCopying == null)
+        return;
+
+      _context?.Post(changing => OnFileCopying(this, new FileSyncEventArgs(message)), sender);
+    }
+
+    private void RaiseCancelInContext(object sender, bool value)
+    {
+      if (OnCancel == null)
+        return;
+
+      _context?.Post(cancelled => OnCancel(this, new CancelEventArgs(value, "Cancelling...")), value);
+    }
+
+    private void RaiseProgressChangedInContext(object sender, int newVal)
+    {
+      if (OnProgressChanged == null)
+        return;
+
+      _context?.Post(changed => OnProgressChanged(this, newVal), this);
     }
     #endregion Private Methods
   }

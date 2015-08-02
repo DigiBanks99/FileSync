@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileSync
 {
   public class Logger
   {
+    [ThreadStatic]
+    [NonSerialized]
+    private static bool _surpressLogging = false;
+    public static bool SurpressLogging
+    {
+      get { return _surpressLogging; }
+      set { _surpressLogging = value; }
+    }
+
     public static void Error(string message)
     {
       Console.ForegroundColor = ConsoleColor.Red;

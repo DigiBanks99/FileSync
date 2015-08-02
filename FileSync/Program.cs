@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using DDXmlLib;
-using DDXmlLib.ExceptionHandling;
 
 namespace FileSync
 {
   public class Program
   {
-    private static FileSyncManager _manager;
-
     public static void Main(string[] args)
     {
-      _manager = new FileSyncManager();
-      _manager.WatchFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FileSync", "WatchList.dfs");
+      FileSyncManager.Manager.WatchFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FileSync", "WatchList.dfs");
 
       if (args.Length > 0)
       {
@@ -59,7 +54,6 @@ namespace FileSync
         else if (args[0].ToLower() == "sync")
         {
           Sync();
-
           Console.Write("Press any key to continue...");
           Console.ReadKey();
         }
@@ -90,19 +84,19 @@ namespace FileSync
     {
       try
       {
-        _manager.Sync();
+        FileSyncManager.Manager.Sync();
 
         Logger.Info(string.Empty);
-        if (_manager.SyncedFiles.Keys.Count == 0)
+        if (FileSyncManager.Manager.SyncedFiles.Keys.Count == 0)
         {
           Logger.Info("All files up to date.");
         }
         else
         {
-          foreach (var key in _manager.SyncedFiles.Keys)
+          foreach (var key in FileSyncManager.Manager.SyncedFiles.Keys)
           {
             Logger.Success(string.Format("Added the following files for {0}:", key));
-            foreach (var file in _manager.SyncedFiles[key])
+            foreach (var file in FileSyncManager.Manager.SyncedFiles[key])
               Logger.Success(string.Format("\t{0}", file));
           }
         }
@@ -124,7 +118,7 @@ namespace FileSync
       watchItem.IncludeSubFolders = includeSubFolders;
       watchItem.ExcludeFolders = skipList;
 
-      _manager.AddNewWatch(watchItem);
+      FileSyncManager.Manager.AddNewWatch(watchItem);
       Logger.Info(string.Format("Added watch for {0}", watchItem.Name));
     }
   }

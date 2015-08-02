@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace DDXmlLib
@@ -53,6 +53,7 @@ namespace DDXmlLib
     }
     #endregion Stream Connection
 
+    #region Public Methods
     public static IEnumerable<XmlNode> ReadElements(string filePath, string elementName)
     {
       var document = new XmlDocument();
@@ -71,6 +72,15 @@ namespace DDXmlLib
       return document;
     }
 
+    public async static Task<XmlDocument> ReadDocumentAsync(string filePath)
+    {
+      var document = new XmlDocument();
+      await Task.Factory.StartNew(() => document.Load(filePath));
+      return document;
+    }
+    #endregion Public Methods
+
+    #region Private Methods
     private static void GetMatchingNode(string elementName, List<XmlNode> elements, XmlNodeList childNodes)
     {
       foreach (XmlNode node in childNodes)
@@ -87,6 +97,7 @@ namespace DDXmlLib
         }
       }
     }
+    #endregion Private Methods
 
     #region IDisposable Members
 
